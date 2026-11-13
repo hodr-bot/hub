@@ -16,6 +16,7 @@ import me.chubbyduck.canvas.core.session.SessionPlatform;
 import me.chubbyduck.canvas.elements.Themes;
 import me.chubbyduck.canvas.pack.CanvasPackBuilder;
 import me.chubbyduck.canvas.session.Session;
+import me.chubbyduck.canvas.spi.CanvasPlatform;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.identity.Identity;
@@ -80,6 +81,7 @@ public final class MinestomCanvas {
             platform,
             theme -> theme == null ? Themes.ORE : theme,
             LOG);
+        CanvasPlatform.install(manager);
         events.addListener(PlayerCustomClickEvent.class, event -> {
             if (!event.getKey().equals(MinestomDialogs.actionKey())) {
                 return;

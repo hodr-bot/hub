@@ -65,6 +65,7 @@ public final class HubBootstrap {
 			event.setSpawningInstance(HUB);
 			event.getPlayer().setRespawnPoint(SPAWN);
 		});
+		HubWelcome.install(events);
 		events.addListener(PlayerSpawnEvent.class, event -> {
 			if (!event.isFirstSpawn()) {
 				return;
@@ -72,6 +73,7 @@ public final class HubBootstrap {
 			Player player = event.getPlayer();
 			player.setGameMode(GameMode.ADVENTURE);
 			player.teleport(SPAWN);
+			HubWelcome.greet(player);
 			MinecraftServer.getSchedulerManager().buildTask(() -> {
 				Player online = MinecraftServer.getConnectionManager()
 					.getOnlinePlayerByUuid(player.getUuid());
