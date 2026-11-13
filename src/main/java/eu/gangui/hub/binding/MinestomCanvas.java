@@ -49,6 +49,7 @@ public final class MinestomCanvas {
         final var pack = new CanvasPackBuilder()
             .register(GameMenu.class)
             .register(SettingsMenu.class)
+            .registerTheme(Themes.ORE)
             .build();
         final var platform = new SessionPlatform() {
             @Override
