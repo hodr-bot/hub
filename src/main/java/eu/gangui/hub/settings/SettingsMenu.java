@@ -36,6 +36,14 @@ public final class SettingsMenu implements NodeLike {
     public Node getNode(final Scope scope) {
         final var player = MinestomCanvas.playerOf(scope.viewer());
         final var current = this.store.load(player.getUuid());
+        final var language = scope.useState(current.language());
+        final var announcements = scope.useState(current.announcements());
+        final var autoQueue = scope.useState(current.autoQueue());
+        final var density = scope.useState(current.density());
+        final var next = new HubSettings(language.get(), announcements.get(), autoQueue.get(), density.get());
+        if (!next.equals(current)) {
+            this.store.save(player.getUuid(), next);
+        }
         return Panel.builder()
             .title(Component.text("Reglages"))
             .add(Column.builder()
@@ -46,29 +54,25 @@ public final class SettingsMenu implements NodeLike {
                     .description("Langue des menus du hub")
                     .control(Segmented.<HubSettings.Language>builder()
                         .options(HubSettings.Language.values())
-                        .value(current.language(), value -> this.store.save(player.getUuid(), new HubSettings(
-                            value, current.announcements(), current.autoQueue(), current.density())))
+                        .value(language)
                         .build())
                     .build())
                 .add(SettingRow.builder()
                     .label("Annonces")
                     .description("Messages d'ambiance du hub")
-                    .control(Toggle.of(current.announcements(), value -> this.store.save(player.getUuid(), new HubSettings(
-                        current.language(), value, current.autoQueue(), current.density()))))
+                    .control(Toggle.of(announcements))
                     .build())
                 .add(SettingRow.builder()
                     .label("File auto")
                     .description("Rejoindre la prochaine partie au retour au hub")
-                    .control(Toggle.of(current.autoQueue(), value -> this.store.save(player.getUuid(), new HubSettings(
-                        current.language(), current.announcements(), value, current.density()))))
+                    .control(Toggle.of(autoQueue))
                     .build())
                 .add(SettingRow.builder()
                     .label("Particules")
                     .description("Effets cosmetiques du hub")
                     .control(Segmented.<HubSettings.Density>builder()
                         .options(HubSettings.Density.values())
-                        .value(current.density(), value -> this.store.save(player.getUuid(), new HubSettings(
-                            current.language(), current.announcements(), current.autoQueue(), value)))
+                        .value(density)
                         .build())
                     .build())
                 .add(Text.of("Modifie, ca s'enregistre tout seul."))

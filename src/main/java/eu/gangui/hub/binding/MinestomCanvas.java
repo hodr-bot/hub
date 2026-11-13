@@ -25,6 +25,8 @@ import me.chubbyduck.canvas.spi.CanvasPlatform;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.identity.Identity;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.pointer.Pointer;
 import net.kyori.adventure.resource.ResourcePackInfo;
@@ -137,6 +139,8 @@ public final class MinestomCanvas {
             }
             manager.handleClick(event.getPlayer().getUuid(), session, nonce.intValue(), action,
                 MinestomCanvas.reader(payload));
+            event.getPlayer().playSound(Sound.sound(Key.key("minecraft:ui.button.click"),
+                Sound.Source.MASTER, 0.6f, 1.0f));
         });
     }
 
