@@ -46,3 +46,16 @@ tasks.test {
 	useJUnitPlatform()
 	systemProperty("minestom.inside-test", "true")
 }
+
+tasks.register<Jar>("fatJar") {
+	archiveClassifier.set("fat")
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	manifest { attributes(mapOf("Main-Class" to "eu.gangui.hub.HubBootstrap")) }
+	from(sourceSets["main"].output)
+	from({
+		configurations.runtimeClasspath.get()
+			.filter { it.name.endsWith(".jar") }
+			.map { zipTree(it) }
+	})
+	exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+}
