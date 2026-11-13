@@ -8,6 +8,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.LightingChunk;
@@ -60,6 +61,10 @@ public final class HubBootstrap {
 			Map.of("rush", player -> transfer(player, "rush"),
 				"hg", player -> transfer(player, "hg")),
 			dataDir());
+		events.addListener(AsyncPlayerConfigurationEvent.class, event -> {
+			event.setSpawningInstance(HUB);
+			event.getPlayer().setRespawnPoint(SPAWN);
+		});
 		events.addListener(PlayerSpawnEvent.class, event -> {
 			if (!event.isFirstSpawn()) {
 				return;
