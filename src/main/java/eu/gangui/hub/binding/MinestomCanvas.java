@@ -11,7 +11,9 @@ import me.chubbyduck.canvas.core.dialog.PlainCompiler;
 import me.chubbyduck.canvas.core.render.Renderer;
 import me.chubbyduck.canvas.core.session.SessionManager;
 import me.chubbyduck.canvas.core.session.SessionPlatform;
+import me.chubbyduck.canvas.elements.Nodes;
 import me.chubbyduck.canvas.elements.Themes;
+import me.chubbyduck.canvas.node.Node;
 import me.chubbyduck.canvas.pack.CanvasPackBuilder;
 import me.chubbyduck.canvas.session.Session;
 import me.chubbyduck.canvas.spi.CanvasPlatform;
@@ -45,9 +47,11 @@ public final class MinestomCanvas {
         if (manager != null) {
             return;
         }
-        final var pack = new CanvasPackBuilder()
-            .registerTheme(Themes.ORE)
-            .build();
+        final var packBuilder = new CanvasPackBuilder().registerTheme(Themes.ORE);
+        for (final Class<? extends Node> type : Nodes.defaults()) {
+            packBuilder.register(type);
+        }
+        final var pack = packBuilder.build();
         final var platform = new SessionPlatform() {
             @Override
             public void show(
