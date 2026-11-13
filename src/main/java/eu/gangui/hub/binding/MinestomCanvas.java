@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
-import eu.gangui.hub.menu.GameMenu;
-import eu.gangui.hub.settings.SettingsMenu;
 import me.chubbyduck.canvas.Canvas;
 import me.chubbyduck.canvas.core.dialog.GlyphCompiler;
 import me.chubbyduck.canvas.core.dialog.InputBinding;
@@ -48,8 +46,6 @@ public final class MinestomCanvas {
             return;
         }
         final var pack = new CanvasPackBuilder()
-            .register(GameMenu.class)
-            .register(SettingsMenu.class)
             .registerTheme(Themes.ORE)
             .build();
         final var platform = new SessionPlatform() {

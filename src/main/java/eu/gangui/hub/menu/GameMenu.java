@@ -27,7 +27,7 @@ import org.jspecify.annotations.NullMarked;
  * screen with its own transfer logic.
  */
 @NullMarked
-public final class GameMenu extends me.chubbyduck.canvas.node.Node {
+public final class GameMenu implements NodeLike {
 
     /**
      * Join handler for one game. Implementations teleport, transfer, or queue

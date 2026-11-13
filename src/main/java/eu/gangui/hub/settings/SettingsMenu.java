@@ -22,7 +22,7 @@ import org.jspecify.annotations.NullMarked;
  * next hub interaction (language, announcements gate, auto-queue, particles).
  */
 @NullMarked
-public final class SettingsMenu extends me.chubbyduck.canvas.node.Node {
+public final class SettingsMenu implements NodeLike {
 
     private final GameMenu menu;
     private final SettingsStore store;
